@@ -106,6 +106,7 @@ else:
 # ---------------------
 # ✅ CRIME MAP
 # ---------------------
+
 elif page == "Crime Map":
     st.title("🗺️ Crime Map")
     if not st.session_state.REPORT_DB:
