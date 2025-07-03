@@ -81,11 +81,27 @@ if page == "Home":
     st.metric("Reports Crawled", len(st.session_state.REPORT_DB))
     st.metric("Correlations Found", len(high_confidence))
 
-    # Fake chart
-    complaint_types = ["Theft", "Burglary", "Fraud", "Vandalism"]
-    counts = [5, 8, 2, 3]
-    fig = px.bar(x=complaint_types, y=counts, labels={"x": "Complaint Type", "y": "Count"})
+    # ---------------------
+# ✅ Real chart from actual report data
+# ---------------------
+
+if REPORT_DB:
+    # Count reports by type
+    df = pd.DataFrame(REPORT_DB)
+    type_counts = df["type"].value_counts().reset_index()
+    type_counts.columns = ["Complaint Type", "Count"]
+
+    fig = px.bar(
+        type_counts,
+        x="Complaint Type",
+        y="Count",
+        labels={"Complaint Type": "Complaint Type", "Count": "Count"},
+        title="Reports by Complaint Type"
+    )
     st.plotly_chart(fig)
+else:
+    st.info("No reports to chart yet.")
+
 
 # ---------------------
 # ✅ CRIME MAP
